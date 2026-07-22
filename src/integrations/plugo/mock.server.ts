@@ -18,10 +18,12 @@ export function createMockPlugoAdapter(): PlugoCatalogAdapter {
         name: p.display_name,
         description: p.description ?? undefined,
         imageUrl: p.image_url,
+        imageUrls: p.image_url ? [p.image_url] : [],
         variants: (p.event_product_variants ?? []).map((v: any) => ({
           id: v.plugo_variation_id,
           sku: v.sku,
           name: v.display_name,
+          hasOptionLabel: Boolean(v.size || v.color),
           size: v.size,
           color: v.color,
           price: Number(v.price_snapshot),

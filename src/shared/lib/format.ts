@@ -16,12 +16,25 @@ export function formatJakarta(dateIso: string, opts?: Intl.DateTimeFormatOptions
 }
 
 export type AvailabilityTier = "available" | "low" | "almost" | "sold_out";
+
+/** Gudang Erspo badges: sold out at 0, low stock under 10. */
 export function availabilityTier(qty: number): AvailabilityTier {
   if (qty <= 0) return "sold_out";
-  if (qty <= 3) return "almost";
-  if (qty <= 10) return "low";
+  if (qty < 10) return "low";
   return "available";
 }
+
 export function availabilityLabel(tier: AvailabilityTier): string {
-  return { available: "Available", low: "Low stock", almost: "Almost sold out", sold_out: "Sold out" }[tier];
+  return {
+    available: "Available",
+    low: "Low stock",
+    almost: "Low stock",
+    sold_out: "Sold out",
+  }[tier];
+}
+
+export function formatSoldCount(value: number | null | undefined): string {
+  const n = Number(value ?? 0);
+  if (!Number.isFinite(n) || n <= 0) return "0";
+  return Math.round(n).toLocaleString("id-ID");
 }

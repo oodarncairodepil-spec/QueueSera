@@ -8,7 +8,7 @@ export const productsQueryOptions = (slug: string) =>
   queryOptions({ queryKey: ["event", slug, "products"], queryFn: () => listEventProducts({ data: { slug } }), staleTime: 15_000 });
 
 export const productQueryOptions = (slug: string, productId: string) =>
-  queryOptions({ queryKey: ["event", slug, "product", productId], queryFn: () => getEventProduct({ data: { slug, productId } }), staleTime: 10_000 });
+  queryOptions({ queryKey: ["event", slug, "product", productId], queryFn: () => getEventProduct({ data: { slug, productId } }), staleTime: 30_000 });
 
 export const bookingQueryOptions = (token: string) =>
   queryOptions({ queryKey: ["booking", token], queryFn: () => getBookingByToken({ data: { token } }), staleTime: 5_000 });

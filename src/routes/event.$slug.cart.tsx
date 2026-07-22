@@ -33,7 +33,9 @@ function CartPage() {
   const [idempotencyKey] = useState(() => (typeof window !== "undefined" ? generateToken(16) : ""));
 
   useEffect(() => {
-    if (loaded && !session) navigate({ to: "/event/$slug/access", params: { slug } });
+    if (loaded && (!session || !session.phone)) {
+      navigate({ to: "/event/$slug/access", params: { slug } });
+    }
   }, [loaded, session, slug, navigate]);
 
   async function confirm() {

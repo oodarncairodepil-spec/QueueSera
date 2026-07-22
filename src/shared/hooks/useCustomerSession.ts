@@ -2,7 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 
 const KEY = (slug: string) => `eq:session:${slug}`;
 
-export interface StoredSession { token: string; customerName?: string; }
+export interface StoredSession {
+  token: string;
+  customerName?: string;
+  phone?: string;
+}
 
 export function useCustomerSession(slug: string) {
   const [session, setSession] = useState<StoredSession | null>(null);
@@ -23,6 +27,29 @@ export function useCustomerSession(slug: string) {
     setSession(null);
   }, [slug]);
   return { session, loaded, save, clear };
+}
+
+const UNLOCK_KEY = (slug: string) => `eq:unlocked:${slug}`;
+
+/** Device has completed access-code verification at least once for this event. */
+export function useEventUnlock(slug: string) {
+  const [unlocked, setUnlocked] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    try {
+      setUnlocked(localStorage.getItem(UNLOCK_KEY(slug)) === "1");
+    } catch {}
+    setLoaded(true);
+  }, [slug]);
+  const markUnlocked = useCallback(() => {
+    localStorage.setItem(UNLOCK_KEY(slug), "1");
+    setUnlocked(true);
+  }, [slug]);
+  const clearUnlock = useCallback(() => {
+    localStorage.removeItem(UNLOCK_KEY(slug));
+    setUnlocked(false);
+  }, [slug]);
+  return { unlocked, loaded, markUnlocked, clearUnlock };
 }
 
 const BOOKING_KEY = (slug: string) => `eq:booking:${slug}`;

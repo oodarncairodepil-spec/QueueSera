@@ -10,43 +10,72 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
+import { Route as AdminCodesRouteImport } from './routes/admin.codes'
+import { Route as AdminEventRouteImport } from './routes/admin.event'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as EventSlugRouteImport } from './routes/event.$slug'
-import { Route as EventSlugProductsRouteImport } from './routes/event.$slug.products'
-import { Route as EventSlugCustomerRouteImport } from './routes/event.$slug.customer'
-import { Route as EventSlugClosedRouteImport } from './routes/event.$slug.closed'
-import { Route as EventSlugCartRouteImport } from './routes/event.$slug.cart'
+import { Route as AdminBookingsBookingIdRouteImport } from './routes/admin.bookings.$bookingId'
+import { Route as EventSlugIndexRouteImport } from './routes/event.$slug.index'
 import { Route as EventSlugAccessRouteImport } from './routes/event.$slug.access'
-import { Route as EventSlugProductsProductIdRouteImport } from './routes/event.$slug.products.$productId'
+import { Route as EventSlugCartRouteImport } from './routes/event.$slug.cart'
+import { Route as EventSlugClosedRouteImport } from './routes/event.$slug.closed'
+import { Route as EventSlugCustomerRouteImport } from './routes/event.$slug.customer'
+import { Route as EventSlugProductsRouteImport } from './routes/event.$slug.products'
 import { Route as EventSlugBookingTokenRouteImport } from './routes/event.$slug.booking.$token'
+import { Route as EventSlugProductsIndexRouteImport } from './routes/event.$slug.products.index'
+import { Route as EventSlugProductsProductIdRouteImport } from './routes/event.$slug.products.$productId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBookingsRoute = AdminBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCodesRoute = AdminCodesRouteImport.update({
+  id: '/codes',
+  path: '/codes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEventRoute = AdminEventRouteImport.update({
+  id: '/event',
+  path: '/event',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
 const EventSlugRoute = EventSlugRouteImport.update({
   id: '/event/$slug',
   path: '/event/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EventSlugProductsRoute = EventSlugProductsRouteImport.update({
-  id: '/products',
-  path: '/products',
-  getParentRoute: () => EventSlugRoute,
+const AdminBookingsBookingIdRoute = AdminBookingsBookingIdRouteImport.update({
+  id: '/$bookingId',
+  path: '/$bookingId',
+  getParentRoute: () => AdminBookingsRoute,
 } as any)
-const EventSlugCustomerRoute = EventSlugCustomerRouteImport.update({
-  id: '/customer',
-  path: '/customer',
-  getParentRoute: () => EventSlugRoute,
-} as any)
-const EventSlugClosedRoute = EventSlugClosedRouteImport.update({
-  id: '/closed',
-  path: '/closed',
-  getParentRoute: () => EventSlugRoute,
-} as any)
-const EventSlugCartRoute = EventSlugCartRouteImport.update({
-  id: '/cart',
-  path: '/cart',
+const EventSlugIndexRoute = EventSlugIndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => EventSlugRoute,
 } as any)
 const EventSlugAccessRoute = EventSlugAccessRouteImport.update({
@@ -54,90 +83,164 @@ const EventSlugAccessRoute = EventSlugAccessRouteImport.update({
   path: '/access',
   getParentRoute: () => EventSlugRoute,
 } as any)
+const EventSlugCartRoute = EventSlugCartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => EventSlugRoute,
+} as any)
+const EventSlugClosedRoute = EventSlugClosedRouteImport.update({
+  id: '/closed',
+  path: '/closed',
+  getParentRoute: () => EventSlugRoute,
+} as any)
+const EventSlugCustomerRoute = EventSlugCustomerRouteImport.update({
+  id: '/customer',
+  path: '/customer',
+  getParentRoute: () => EventSlugRoute,
+} as any)
+const EventSlugProductsRoute = EventSlugProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => EventSlugRoute,
+} as any)
+const EventSlugBookingTokenRoute = EventSlugBookingTokenRouteImport.update({
+  id: '/booking/$token',
+  path: '/booking/$token',
+  getParentRoute: () => EventSlugRoute,
+} as any)
+const EventSlugProductsIndexRoute = EventSlugProductsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EventSlugProductsRoute,
+} as any)
 const EventSlugProductsProductIdRoute =
   EventSlugProductsProductIdRouteImport.update({
     id: '/$productId',
     path: '/$productId',
     getParentRoute: () => EventSlugProductsRoute,
   } as any)
-const EventSlugBookingTokenRoute = EventSlugBookingTokenRouteImport.update({
-  id: '/booking/$token',
-  path: '/booking/$token',
-  getParentRoute: () => EventSlugRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/admin/bookings': typeof AdminBookingsRouteWithChildren
+  '/admin/codes': typeof AdminCodesRoute
+  '/admin/event': typeof AdminEventRoute
+  '/admin/login': typeof AdminLoginRoute
   '/event/$slug': typeof EventSlugRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
+  '/admin/bookings/$bookingId': typeof AdminBookingsBookingIdRoute
   '/event/$slug/access': typeof EventSlugAccessRoute
   '/event/$slug/cart': typeof EventSlugCartRoute
   '/event/$slug/closed': typeof EventSlugClosedRoute
   '/event/$slug/customer': typeof EventSlugCustomerRoute
   '/event/$slug/products': typeof EventSlugProductsRouteWithChildren
+  '/event/$slug/': typeof EventSlugIndexRoute
   '/event/$slug/booking/$token': typeof EventSlugBookingTokenRoute
   '/event/$slug/products/$productId': typeof EventSlugProductsProductIdRoute
+  '/event/$slug/products/': typeof EventSlugProductsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/event/$slug': typeof EventSlugRouteWithChildren
+  '/admin/bookings': typeof AdminBookingsRouteWithChildren
+  '/admin/codes': typeof AdminCodesRoute
+  '/admin/event': typeof AdminEventRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/bookings/$bookingId': typeof AdminBookingsBookingIdRoute
   '/event/$slug/access': typeof EventSlugAccessRoute
   '/event/$slug/cart': typeof EventSlugCartRoute
   '/event/$slug/closed': typeof EventSlugClosedRoute
   '/event/$slug/customer': typeof EventSlugCustomerRoute
-  '/event/$slug/products': typeof EventSlugProductsRouteWithChildren
+  '/event/$slug': typeof EventSlugIndexRoute
   '/event/$slug/booking/$token': typeof EventSlugBookingTokenRoute
   '/event/$slug/products/$productId': typeof EventSlugProductsProductIdRoute
+  '/event/$slug/products': typeof EventSlugProductsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/admin/bookings': typeof AdminBookingsRouteWithChildren
+  '/admin/codes': typeof AdminCodesRoute
+  '/admin/event': typeof AdminEventRoute
+  '/admin/login': typeof AdminLoginRoute
   '/event/$slug': typeof EventSlugRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
+  '/admin/bookings/$bookingId': typeof AdminBookingsBookingIdRoute
   '/event/$slug/access': typeof EventSlugAccessRoute
   '/event/$slug/cart': typeof EventSlugCartRoute
   '/event/$slug/closed': typeof EventSlugClosedRoute
   '/event/$slug/customer': typeof EventSlugCustomerRoute
   '/event/$slug/products': typeof EventSlugProductsRouteWithChildren
+  '/event/$slug/': typeof EventSlugIndexRoute
   '/event/$slug/booking/$token': typeof EventSlugBookingTokenRoute
   '/event/$slug/products/$productId': typeof EventSlugProductsProductIdRoute
+  '/event/$slug/products/': typeof EventSlugProductsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
+    | '/admin/bookings'
+    | '/admin/codes'
+    | '/admin/event'
+    | '/admin/login'
     | '/event/$slug'
+    | '/admin/'
+    | '/admin/bookings/$bookingId'
     | '/event/$slug/access'
     | '/event/$slug/cart'
     | '/event/$slug/closed'
     | '/event/$slug/customer'
     | '/event/$slug/products'
+    | '/event/$slug/'
     | '/event/$slug/booking/$token'
     | '/event/$slug/products/$productId'
+    | '/event/$slug/products/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/event/$slug'
+    | '/admin/bookings'
+    | '/admin/codes'
+    | '/admin/event'
+    | '/admin/login'
+    | '/admin'
+    | '/admin/bookings/$bookingId'
     | '/event/$slug/access'
     | '/event/$slug/cart'
     | '/event/$slug/closed'
     | '/event/$slug/customer'
-    | '/event/$slug/products'
+    | '/event/$slug'
     | '/event/$slug/booking/$token'
     | '/event/$slug/products/$productId'
+    | '/event/$slug/products'
   id:
     | '__root__'
     | '/'
+    | '/admin'
+    | '/admin/bookings'
+    | '/admin/codes'
+    | '/admin/event'
+    | '/admin/login'
     | '/event/$slug'
+    | '/admin/'
+    | '/admin/bookings/$bookingId'
     | '/event/$slug/access'
     | '/event/$slug/cart'
     | '/event/$slug/closed'
     | '/event/$slug/customer'
     | '/event/$slug/products'
+    | '/event/$slug/'
     | '/event/$slug/booking/$token'
     | '/event/$slug/products/$productId'
+    | '/event/$slug/products/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   EventSlugRoute: typeof EventSlugRouteWithChildren
 }
 
@@ -150,6 +253,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/bookings': {
+      id: '/admin/bookings'
+      path: '/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AdminBookingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/codes': {
+      id: '/admin/codes'
+      path: '/codes'
+      fullPath: '/admin/codes'
+      preLoaderRoute: typeof AdminCodesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/event': {
+      id: '/admin/event'
+      path: '/event'
+      fullPath: '/admin/event'
+      preLoaderRoute: typeof AdminEventRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/event/$slug': {
       id: '/event/$slug'
       path: '/event/$slug'
@@ -157,32 +302,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/event/$slug/products': {
-      id: '/event/$slug/products'
-      path: '/products'
-      fullPath: '/event/$slug/products'
-      preLoaderRoute: typeof EventSlugProductsRouteImport
-      parentRoute: typeof EventSlugRoute
+    '/admin/bookings/$bookingId': {
+      id: '/admin/bookings/$bookingId'
+      path: '/$bookingId'
+      fullPath: '/admin/bookings/$bookingId'
+      preLoaderRoute: typeof AdminBookingsBookingIdRouteImport
+      parentRoute: typeof AdminBookingsRoute
     }
-    '/event/$slug/customer': {
-      id: '/event/$slug/customer'
-      path: '/customer'
-      fullPath: '/event/$slug/customer'
-      preLoaderRoute: typeof EventSlugCustomerRouteImport
-      parentRoute: typeof EventSlugRoute
-    }
-    '/event/$slug/closed': {
-      id: '/event/$slug/closed'
-      path: '/closed'
-      fullPath: '/event/$slug/closed'
-      preLoaderRoute: typeof EventSlugClosedRouteImport
-      parentRoute: typeof EventSlugRoute
-    }
-    '/event/$slug/cart': {
-      id: '/event/$slug/cart'
-      path: '/cart'
-      fullPath: '/event/$slug/cart'
-      preLoaderRoute: typeof EventSlugCartRouteImport
+    '/event/$slug/': {
+      id: '/event/$slug/'
+      path: '/'
+      fullPath: '/event/$slug/'
+      preLoaderRoute: typeof EventSlugIndexRouteImport
       parentRoute: typeof EventSlugRoute
     }
     '/event/$slug/access': {
@@ -192,12 +323,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventSlugAccessRouteImport
       parentRoute: typeof EventSlugRoute
     }
-    '/event/$slug/products/$productId': {
-      id: '/event/$slug/products/$productId'
-      path: '/$productId'
-      fullPath: '/event/$slug/products/$productId'
-      preLoaderRoute: typeof EventSlugProductsProductIdRouteImport
-      parentRoute: typeof EventSlugProductsRoute
+    '/event/$slug/cart': {
+      id: '/event/$slug/cart'
+      path: '/cart'
+      fullPath: '/event/$slug/cart'
+      preLoaderRoute: typeof EventSlugCartRouteImport
+      parentRoute: typeof EventSlugRoute
+    }
+    '/event/$slug/closed': {
+      id: '/event/$slug/closed'
+      path: '/closed'
+      fullPath: '/event/$slug/closed'
+      preLoaderRoute: typeof EventSlugClosedRouteImport
+      parentRoute: typeof EventSlugRoute
+    }
+    '/event/$slug/customer': {
+      id: '/event/$slug/customer'
+      path: '/customer'
+      fullPath: '/event/$slug/customer'
+      preLoaderRoute: typeof EventSlugCustomerRouteImport
+      parentRoute: typeof EventSlugRoute
+    }
+    '/event/$slug/products': {
+      id: '/event/$slug/products'
+      path: '/products'
+      fullPath: '/event/$slug/products'
+      preLoaderRoute: typeof EventSlugProductsRouteImport
+      parentRoute: typeof EventSlugRoute
     }
     '/event/$slug/booking/$token': {
       id: '/event/$slug/booking/$token'
@@ -206,15 +358,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventSlugBookingTokenRouteImport
       parentRoute: typeof EventSlugRoute
     }
+    '/event/$slug/products/': {
+      id: '/event/$slug/products/'
+      path: '/'
+      fullPath: '/event/$slug/products/'
+      preLoaderRoute: typeof EventSlugProductsIndexRouteImport
+      parentRoute: typeof EventSlugProductsRoute
+    }
+    '/event/$slug/products/$productId': {
+      id: '/event/$slug/products/$productId'
+      path: '/$productId'
+      fullPath: '/event/$slug/products/$productId'
+      preLoaderRoute: typeof EventSlugProductsProductIdRouteImport
+      parentRoute: typeof EventSlugProductsRoute
+    }
   }
 }
 
+interface AdminBookingsRouteChildren {
+  AdminBookingsBookingIdRoute: typeof AdminBookingsBookingIdRoute
+}
+
+const AdminBookingsRouteChildren: AdminBookingsRouteChildren = {
+  AdminBookingsBookingIdRoute: AdminBookingsBookingIdRoute,
+}
+
+const AdminBookingsRouteWithChildren = AdminBookingsRoute._addFileChildren(
+  AdminBookingsRouteChildren,
+)
+
+interface AdminRouteChildren {
+  AdminBookingsRoute: typeof AdminBookingsRouteWithChildren
+  AdminCodesRoute: typeof AdminCodesRoute
+  AdminEventRoute: typeof AdminEventRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminBookingsRoute: AdminBookingsRouteWithChildren,
+  AdminCodesRoute: AdminCodesRoute,
+  AdminEventRoute: AdminEventRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 interface EventSlugProductsRouteChildren {
   EventSlugProductsProductIdRoute: typeof EventSlugProductsProductIdRoute
+  EventSlugProductsIndexRoute: typeof EventSlugProductsIndexRoute
 }
 
 const EventSlugProductsRouteChildren: EventSlugProductsRouteChildren = {
   EventSlugProductsProductIdRoute: EventSlugProductsProductIdRoute,
+  EventSlugProductsIndexRoute: EventSlugProductsIndexRoute,
 }
 
 const EventSlugProductsRouteWithChildren =
@@ -226,6 +424,7 @@ interface EventSlugRouteChildren {
   EventSlugClosedRoute: typeof EventSlugClosedRoute
   EventSlugCustomerRoute: typeof EventSlugCustomerRoute
   EventSlugProductsRoute: typeof EventSlugProductsRouteWithChildren
+  EventSlugIndexRoute: typeof EventSlugIndexRoute
   EventSlugBookingTokenRoute: typeof EventSlugBookingTokenRoute
 }
 
@@ -235,6 +434,7 @@ const EventSlugRouteChildren: EventSlugRouteChildren = {
   EventSlugClosedRoute: EventSlugClosedRoute,
   EventSlugCustomerRoute: EventSlugCustomerRoute,
   EventSlugProductsRoute: EventSlugProductsRouteWithChildren,
+  EventSlugIndexRoute: EventSlugIndexRoute,
   EventSlugBookingTokenRoute: EventSlugBookingTokenRoute,
 }
 
@@ -244,8 +444,19 @@ const EventSlugRouteWithChildren = EventSlugRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   EventSlugRoute: EventSlugRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

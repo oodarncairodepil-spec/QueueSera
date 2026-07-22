@@ -1,1 +1,72 @@
-project_id = "ywvievkpdqjyemnwifkj"
+# Local Supabase stack for x300 mini PC (project: quequesera-local).
+# Docs: https://supabase.com/docs/guides/local-development/cli/config
+#
+# Ports chosen to avoid collisions with:
+#   skorpintar-local  (54321–54329)
+#   automation-api    (54331–54336)
+#
+# Start:  supabase start --exclude edge-runtime
+# Stop:   supabase stop
+# Status: supabase status
+
+project_id = "quequesera-local"
+
+[api]
+enabled = true
+port = 54341
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54342
+shadow_port = 54340
+major_version = 17
+
+[db.pooler]
+enabled = false
+port = 54349
+pool_mode = "transaction"
+default_pool_size = 20
+max_client_conn = 100
+
+[studio]
+enabled = true
+port = 54343
+api_url = "http://127.0.0.1"
+
+[inbucket]
+enabled = true
+port = 54344
+smtp_port = 54345
+pop3_port = 54346
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3000"
+additional_redirect_urls = [
+  "https://127.0.0.1:3000",
+  "http://localhost:3000",
+  "http://127.0.0.1:8080",
+  "http://localhost:8080",
+]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+
+[analytics]
+enabled = false
+
+[realtime]
+enabled = true
+
+[edge_runtime]
+enabled = false

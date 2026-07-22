@@ -181,6 +181,7 @@ export type Database = {
       }
       customer_sessions: {
         Row: {
+          access_code_id: string | null
           anonymous_token_hash: string
           created_at: string
           customer_name: string | null
@@ -192,6 +193,7 @@ export type Database = {
           verified_at: string | null
         }
         Insert: {
+          access_code_id?: string | null
           anonymous_token_hash: string
           created_at?: string
           customer_name?: string | null
@@ -203,6 +205,7 @@ export type Database = {
           verified_at?: string | null
         }
         Update: {
+          access_code_id?: string | null
           anonymous_token_hash?: string
           created_at?: string
           customer_name?: string | null
@@ -214,6 +217,13 @@ export type Database = {
           verified_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "customer_sessions_access_code_id_fkey"
+            columns: ["access_code_id"]
+            isOneToOne: false
+            referencedRelation: "event_access_codes"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "customer_sessions_event_id_fkey"
             columns: ["event_id"]
