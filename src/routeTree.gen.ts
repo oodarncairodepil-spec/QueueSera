@@ -10,33 +10,135 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EventSlugRouteImport } from './routes/event.$slug'
+import { Route as EventSlugProductsRouteImport } from './routes/event.$slug.products'
+import { Route as EventSlugCustomerRouteImport } from './routes/event.$slug.customer'
+import { Route as EventSlugClosedRouteImport } from './routes/event.$slug.closed'
+import { Route as EventSlugCartRouteImport } from './routes/event.$slug.cart'
+import { Route as EventSlugAccessRouteImport } from './routes/event.$slug.access'
+import { Route as EventSlugProductsProductIdRouteImport } from './routes/event.$slug.products.$productId'
+import { Route as EventSlugBookingTokenRouteImport } from './routes/event.$slug.booking.$token'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventSlugRoute = EventSlugRouteImport.update({
+  id: '/event/$slug',
+  path: '/event/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventSlugProductsRoute = EventSlugProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => EventSlugRoute,
+} as any)
+const EventSlugCustomerRoute = EventSlugCustomerRouteImport.update({
+  id: '/customer',
+  path: '/customer',
+  getParentRoute: () => EventSlugRoute,
+} as any)
+const EventSlugClosedRoute = EventSlugClosedRouteImport.update({
+  id: '/closed',
+  path: '/closed',
+  getParentRoute: () => EventSlugRoute,
+} as any)
+const EventSlugCartRoute = EventSlugCartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => EventSlugRoute,
+} as any)
+const EventSlugAccessRoute = EventSlugAccessRouteImport.update({
+  id: '/access',
+  path: '/access',
+  getParentRoute: () => EventSlugRoute,
+} as any)
+const EventSlugProductsProductIdRoute =
+  EventSlugProductsProductIdRouteImport.update({
+    id: '/$productId',
+    path: '/$productId',
+    getParentRoute: () => EventSlugProductsRoute,
+  } as any)
+const EventSlugBookingTokenRoute = EventSlugBookingTokenRouteImport.update({
+  id: '/booking/$token',
+  path: '/booking/$token',
+  getParentRoute: () => EventSlugRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/event/$slug': typeof EventSlugRouteWithChildren
+  '/event/$slug/access': typeof EventSlugAccessRoute
+  '/event/$slug/cart': typeof EventSlugCartRoute
+  '/event/$slug/closed': typeof EventSlugClosedRoute
+  '/event/$slug/customer': typeof EventSlugCustomerRoute
+  '/event/$slug/products': typeof EventSlugProductsRouteWithChildren
+  '/event/$slug/booking/$token': typeof EventSlugBookingTokenRoute
+  '/event/$slug/products/$productId': typeof EventSlugProductsProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/event/$slug': typeof EventSlugRouteWithChildren
+  '/event/$slug/access': typeof EventSlugAccessRoute
+  '/event/$slug/cart': typeof EventSlugCartRoute
+  '/event/$slug/closed': typeof EventSlugClosedRoute
+  '/event/$slug/customer': typeof EventSlugCustomerRoute
+  '/event/$slug/products': typeof EventSlugProductsRouteWithChildren
+  '/event/$slug/booking/$token': typeof EventSlugBookingTokenRoute
+  '/event/$slug/products/$productId': typeof EventSlugProductsProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/event/$slug': typeof EventSlugRouteWithChildren
+  '/event/$slug/access': typeof EventSlugAccessRoute
+  '/event/$slug/cart': typeof EventSlugCartRoute
+  '/event/$slug/closed': typeof EventSlugClosedRoute
+  '/event/$slug/customer': typeof EventSlugCustomerRoute
+  '/event/$slug/products': typeof EventSlugProductsRouteWithChildren
+  '/event/$slug/booking/$token': typeof EventSlugBookingTokenRoute
+  '/event/$slug/products/$productId': typeof EventSlugProductsProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/event/$slug'
+    | '/event/$slug/access'
+    | '/event/$slug/cart'
+    | '/event/$slug/closed'
+    | '/event/$slug/customer'
+    | '/event/$slug/products'
+    | '/event/$slug/booking/$token'
+    | '/event/$slug/products/$productId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/event/$slug'
+    | '/event/$slug/access'
+    | '/event/$slug/cart'
+    | '/event/$slug/closed'
+    | '/event/$slug/customer'
+    | '/event/$slug/products'
+    | '/event/$slug/booking/$token'
+    | '/event/$slug/products/$productId'
+  id:
+    | '__root__'
+    | '/'
+    | '/event/$slug'
+    | '/event/$slug/access'
+    | '/event/$slug/cart'
+    | '/event/$slug/closed'
+    | '/event/$slug/customer'
+    | '/event/$slug/products'
+    | '/event/$slug/booking/$token'
+    | '/event/$slug/products/$productId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EventSlugRoute: typeof EventSlugRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +150,101 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/event/$slug': {
+      id: '/event/$slug'
+      path: '/event/$slug'
+      fullPath: '/event/$slug'
+      preLoaderRoute: typeof EventSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event/$slug/products': {
+      id: '/event/$slug/products'
+      path: '/products'
+      fullPath: '/event/$slug/products'
+      preLoaderRoute: typeof EventSlugProductsRouteImport
+      parentRoute: typeof EventSlugRoute
+    }
+    '/event/$slug/customer': {
+      id: '/event/$slug/customer'
+      path: '/customer'
+      fullPath: '/event/$slug/customer'
+      preLoaderRoute: typeof EventSlugCustomerRouteImport
+      parentRoute: typeof EventSlugRoute
+    }
+    '/event/$slug/closed': {
+      id: '/event/$slug/closed'
+      path: '/closed'
+      fullPath: '/event/$slug/closed'
+      preLoaderRoute: typeof EventSlugClosedRouteImport
+      parentRoute: typeof EventSlugRoute
+    }
+    '/event/$slug/cart': {
+      id: '/event/$slug/cart'
+      path: '/cart'
+      fullPath: '/event/$slug/cart'
+      preLoaderRoute: typeof EventSlugCartRouteImport
+      parentRoute: typeof EventSlugRoute
+    }
+    '/event/$slug/access': {
+      id: '/event/$slug/access'
+      path: '/access'
+      fullPath: '/event/$slug/access'
+      preLoaderRoute: typeof EventSlugAccessRouteImport
+      parentRoute: typeof EventSlugRoute
+    }
+    '/event/$slug/products/$productId': {
+      id: '/event/$slug/products/$productId'
+      path: '/$productId'
+      fullPath: '/event/$slug/products/$productId'
+      preLoaderRoute: typeof EventSlugProductsProductIdRouteImport
+      parentRoute: typeof EventSlugProductsRoute
+    }
+    '/event/$slug/booking/$token': {
+      id: '/event/$slug/booking/$token'
+      path: '/booking/$token'
+      fullPath: '/event/$slug/booking/$token'
+      preLoaderRoute: typeof EventSlugBookingTokenRouteImport
+      parentRoute: typeof EventSlugRoute
+    }
   }
 }
 
+interface EventSlugProductsRouteChildren {
+  EventSlugProductsProductIdRoute: typeof EventSlugProductsProductIdRoute
+}
+
+const EventSlugProductsRouteChildren: EventSlugProductsRouteChildren = {
+  EventSlugProductsProductIdRoute: EventSlugProductsProductIdRoute,
+}
+
+const EventSlugProductsRouteWithChildren =
+  EventSlugProductsRoute._addFileChildren(EventSlugProductsRouteChildren)
+
+interface EventSlugRouteChildren {
+  EventSlugAccessRoute: typeof EventSlugAccessRoute
+  EventSlugCartRoute: typeof EventSlugCartRoute
+  EventSlugClosedRoute: typeof EventSlugClosedRoute
+  EventSlugCustomerRoute: typeof EventSlugCustomerRoute
+  EventSlugProductsRoute: typeof EventSlugProductsRouteWithChildren
+  EventSlugBookingTokenRoute: typeof EventSlugBookingTokenRoute
+}
+
+const EventSlugRouteChildren: EventSlugRouteChildren = {
+  EventSlugAccessRoute: EventSlugAccessRoute,
+  EventSlugCartRoute: EventSlugCartRoute,
+  EventSlugClosedRoute: EventSlugClosedRoute,
+  EventSlugCustomerRoute: EventSlugCustomerRoute,
+  EventSlugProductsRoute: EventSlugProductsRouteWithChildren,
+  EventSlugBookingTokenRoute: EventSlugBookingTokenRoute,
+}
+
+const EventSlugRouteWithChildren = EventSlugRoute._addFileChildren(
+  EventSlugRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EventSlugRoute: EventSlugRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
